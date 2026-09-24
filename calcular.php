@@ -1,73 +1,57 @@
-<?php
-//ENTRADA
-$n1= (float)$_POST['n1'];
-$n2= (float)$_POST['n2'];
-
-//PROCESSAMENTO
-$adicao=$n1+$n2;
-$subtracao = $n1 + $n2;
-$multiplicacao = $n1 * $n2;
-
-$divisaoValida = $n2 !=0; //Atribuir o resultado logico na variavel
-if ($divisaoValida==true)
+<?php 
+//OBTER OS DADOS
+$nome = $_POST['nome'];
+$total = (float) $_POST['total'];
+$idade = (int) $_POST['idade'];
+if (isset($_POST['cartao']))
 {
-    $divisao=$n1/$n2;
-    $modulo=$n1%$n2;
+    $cartao= "sim";
 }
+else
+{
+    $cartao= "não";
+}
+//processamento
+$descontoCartao=0;
+if ($idade==0) {
+    $descontoIdade=0;  
+}
+else if (idade==1)
+{
+    $descontoIdade=5;
+}
+else
+{
+$descontoIdade=7;
 
-$divisao = $n1 / $n2;
-$modulo = $n1 % $n2;
-$potencia = $n1 ** $n2;
-$concatenacao = $n1.$n2; //o ponto ele JUNTA e texto, não soma como número
-
+}//fila if da idade
+if ($cartao="sim") 
+{
+    $descontoCartao= 5;
+}
+$valorDescontoIdade=$total*($descontoIdade/100);
+$valorDescontoCartao=$total*($descontoCartao/100);
+$valorfinal= $total- $valorDescontoIdade - $valorDescontoCartao;
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operações aritméticas</title>
-    
+    <title>Farmácia Paracetaloka</title>
 </head>
 <body>
-    <div class= "card">
-        <h1>Operações Aritméticas</h1>
-        <h1>Resultados</h1>
-        <hr>
-        <h3>
-            <?php echo "$n1 + $n2 = $adicao"; ?>
-        </h3>
-        <h3>
-            <?php echo "$n1 - $n2 = $subtracao"; ?>
-        </h3>
-        <h3>
-            <?php echo "$n1 x $n2 = $multiplicacao"; ?>
-        </h3>
-        <h3>
-            <?php
-            if ($divisaoValida ==true)
-            {
-                echo "$n1 % $n2 = $divisao";
-                echo "<br>";
-                echo "$n1 modulo $n2 = ".number_format($modulo,2, ',',',');
-            }
-           else
-           {
-            echo "<h1>Não há divisão por zero!</h1>";
-           }
-           ?>
-        </h3>
-        <h3>
-            <?php echo "$n1<sup> $n2 </sup>= $potencia"; ?>
-        </h3>
-        <h3>
-            <?php echo "$n1 | $n2 = $concatenacao"; ?>
-        </h3>
-
-    <a href="index.php">voltar</a>
-       
     <div>
+        <h1>Farmácia Paracetaloka
+            <hr>
+            <ol>
+                 <?php echo "Cliente: $nome" ?>
+               <?php echo "Total do pedido: $total" ?><br>
+               <?php echo "Desconto pela faixa etária: $valorDescontoIdade" ?><br>
+            <?php echo "Desconto Fidelidade: $valorDescontoCartao" ?><br>
+                 <?php echo "total a pagar: $valorfinal" ?><br>
+    </div>
     
 </body>
 </html>
